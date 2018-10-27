@@ -1,6 +1,5 @@
 package com.wchah.feedle.controller
 
-import com.wchah.feedle.controller.RestController
 import com.wchah.feedle.domain.Food
 import com.wchah.feedle.domain.Meal
 import com.wchah.feedle.domain.MealFood
