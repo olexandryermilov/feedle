@@ -1,10 +1,12 @@
 package com.wchah.feedle.controller
 
+import com.wchah.feedle.domain.Diet
 import com.wchah.feedle.domain.Food
 import com.wchah.feedle.domain.Meal
 import com.wchah.feedle.domain.MealFood
 import com.wchah.feedle.domain.Statistics
 import com.wchah.feedle.domain.User
+import com.wchah.feedle.services.DietService
 import com.wchah.feedle.services.FoodService
 import com.wchah.feedle.services.MealService
 import com.wchah.feedle.services.StatisticsService
@@ -18,9 +20,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-
 @Controller
 class DefaultRestController implements RestController {
 
@@ -33,6 +32,8 @@ class DefaultRestController implements RestController {
     StatisticsService statisticsService
     @Autowired
     UserService userService
+    @Autowired
+    DietService dietService
 
     @Override
     @PostMapping(path = "/meal", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -41,13 +42,6 @@ class DefaultRestController implements RestController {
         logger.info(meal.toString())
         mealService.putMealIntoDb(meal)
     }
-
-    /*@GetMapping(path = "/stats/{userid}")
-    @ResponseBody
-    List<Meal> getMeal(@RequestParam Long userId) {
-        mealService.getAllMeals(userId)
-    }*/
-
 
     @Override
     @GetMapping(path = "/foods")
@@ -105,5 +99,19 @@ class DefaultRestController implements RestController {
         List<Meal> meals = mealService.getAllMealsByUserIdSince(userId, time)
         List<MealFood> mealFood = meals.stream().map{ meal -> new MealFood(meal, foodService.getFoodById(meal.foodId))}.collect { x -> x} as List<MealFood>
         mealFood
+    }
+
+    @Override
+    @GetMapping(value = "/diet")
+    @ResponseBody
+    Diet getDiet(){
+        dietService.randomDiet
+    }
+
+    @Override
+    @PostMapping(value = "/diet")
+    @ResponseBody
+    Boolean putDiet(@RequestBody Diet diet){
+        dietService.saveDiet(diet)
     }
 }

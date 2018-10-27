@@ -31,6 +31,12 @@ interface MealsRepository extends JpaRepository<Meal, Long> {
     Integer getWaterForUserSince(@Param("userId") Long userId, @Param("time") String time)
 
     @Query(
+            value = "SELECT sum(food.points * meals.amount) FROM meals JOIN food on meals.food = food.id where meals.user = :userId and time>:time",
+            nativeQuery = true
+    )
+    Integer getPointsForUserSince(@Param("userId") Long userId, @Param("time") String time)
+
+    @Query(
             value = "SELECT * FROM meals where meals.user = :userId and meals.time>=:time",
             nativeQuery = true
     )
