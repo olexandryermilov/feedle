@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import java.sql.Timestamp
-
 @Service
 class DefaultStatisticsService implements StatisticsService {
     Logger logger = LoggerFactory.getLogger(DefaultStatisticsService.class)
@@ -30,6 +28,7 @@ class DefaultStatisticsService implements StatisticsService {
         logger.info(since.toString())
         def water = mealsRepository.getWaterForUserSince(userId, since)
         def calories = mealsRepository.getCaloriesForUserSince(userId, since)
-        new Statistics(water==null?0:water, calories==null?0:calories)
+        def points = mealsRepository.getPointsForUserSince(userId, since)
+        new Statistics(water==null?0:water, calories==null?0:calories, points==null?0:points)
     }
 }

@@ -30,6 +30,16 @@ class Food implements Serializable {
     @Column(name = "pieces_to_gramms")
     String piecesToGramms
 
+    @Column(name = "points")
+    Long points
+
+    Long getPoints() {
+        return points
+    }
+
+    void setPoints(Long points) {
+        this.points = points
+    }
 
     Long getId() {
         return id
@@ -87,6 +97,7 @@ class Food implements Serializable {
         this.piecesToGramms = piecesToGramms
     }
 
+
     @Override
     public String toString() {
         return "Food{" +
@@ -97,6 +108,7 @@ class Food implements Serializable {
                 ", tags='" + tags + '\'' +
                 ", piecesName='" + piecesName + '\'' +
                 ", piecesToGramms='" + piecesToGramms + '\'' +
-                '}'
+                ", points=" + points +
+                '}';
     }
 }
