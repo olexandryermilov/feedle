@@ -1,6 +1,6 @@
 package com.wchah.feedle.domain
 
-class Statistics {
+class Statistics implements Serializable{
     Integer water
     Integer calories
 
@@ -8,13 +8,11 @@ class Statistics {
     }
 
     Statistics(Integer water, Integer calories) {
-
         this.water = water
         this.calories = calories
     }
 
     Integer getWater() {
-
         return water
     }
 
