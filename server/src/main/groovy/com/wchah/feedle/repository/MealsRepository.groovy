@@ -1,6 +1,7 @@
 package com.wchah.feedle.repository
 
 import com.wchah.feedle.domain.Meal
+import com.wchah.feedle.domain.MealFood
 import com.wchah.feedle.domain.Statistics
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -28,4 +29,10 @@ interface MealsRepository extends JpaRepository<Meal, Long> {
             nativeQuery = true
     )
     Integer getWaterForUserSince(@Param("userId") Long userId, @Param("time") Timestamp time)
+
+    @Query(
+            value = "SELECT * FROM meals where meals.user_id = :userId and meals.time>=:time",
+            nativeQuery = true
+    )
+    List<Meal> findAllMealByUserIdSince(@Param("userId") Long userId, @Param("time") Timestamp time)
 }

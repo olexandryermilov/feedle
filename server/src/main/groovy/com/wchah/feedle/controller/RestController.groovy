@@ -1,5 +1,6 @@
 package com.wchah.feedle.controller
 
+import com.wchah.feedle.domain.Food
 import com.wchah.feedle.domain.Meal
 import com.wchah.feedle.domain.Statistics
 import com.wchah.feedle.domain.User
@@ -13,4 +14,6 @@ interface RestController {
     Integer getUserType(Long userId)
     def createUser(Long userId, User user)
     def getUserInfo(Long userId)
+    def createFood(Food food, Long userId)
+    def getAllMealsForUser(Long userId, Long time)
 }

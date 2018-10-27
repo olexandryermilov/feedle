@@ -17,4 +17,15 @@ class DefaultFoodService implements FoodService {
     List<Food> getAllFoods() {
         foodRepository.findAll()
     }
+
+    @Override
+    def addFood(Food food) {
+        food.setId(null)
+        foodRepository.save(food)
+    }
+
+    @Override
+    Food getFoodById(Long id){
+        foodRepository.getOne(id)
+    }
 }

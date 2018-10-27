@@ -1,13 +1,11 @@
 package com.wchah.feedle.domain
 
-import javax.annotation.Generated
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonInclude
+
+import javax.persistence.*
 
 @Entity(name="food")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class Food implements Serializable {
     private static final long serialVersionUID = -7788619177798333712L
     @Id

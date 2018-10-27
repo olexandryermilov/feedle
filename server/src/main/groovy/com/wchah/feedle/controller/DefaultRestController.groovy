@@ -1,10 +1,8 @@
 package com.wchah.feedle.controller
 
-
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.wchah.feedle.controller.RestController
 import com.wchah.feedle.domain.Food
 import com.wchah.feedle.domain.Meal
+import com.wchah.feedle.domain.MealFood
 import com.wchah.feedle.domain.Statistics
 import com.wchah.feedle.domain.User
 import com.wchah.feedle.services.FoodService
@@ -14,6 +12,7 @@ import com.wchah.feedle.services.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -84,4 +83,24 @@ class DefaultRestController implements RestController {
     @ResponseBody
     User getUserInfo(@PathVariable Long userId) {
         userService.getUser(userId)
+    }
+
+    @Override
+    @PostMapping(value = "/food")
+    @ResponseBody
+    def createFood(@RequestBody Food food, @RequestHeader Long userId) {
+        if (getUserType(userId) == 2)
+            foodService.addFood(food)
+        else
+            HttpStatus.FORBIDDEN
+    }
+
+    @Override
+    @GetMapping(value = "meals/{userId}/{time}")
+    @ResponseBody
+    def getAllMealsForUser(@PathVariable("userId") Long userId, @PathVariable(required = false) Long time) {
+        List<Meal> meals = mealService.getAllMealsByUserIdSince(userId, new Timestamp(new Timestamp(new Date().getTime()).time - time))
+        List<MealFood> mealFood = meals.stream().map{ meal -> new MealFood(meal, foodService.getFoodById(meal.foodId))}.collect { x -> x} as List<MealFood>
+        mealFood
+    }
 }
