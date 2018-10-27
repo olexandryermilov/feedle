@@ -1,5 +1,6 @@
 package com.wchah.feedle.controller
 
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wchah.feedle.controller.RestController
 import com.wchah.feedle.domain.Food
@@ -83,5 +84,4 @@ class DefaultRestController implements RestController {
     @ResponseBody
     User getUserInfo(@PathVariable Long userId) {
         userService.getUser(userId)
-    }
 }
