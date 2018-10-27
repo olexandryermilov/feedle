@@ -22,7 +22,7 @@ class Meal implements Serializable {
     Meal() {
     }
 
-    Meal(Long foodId, Long userId, Timestamp time) {
+    Meal(Long foodId, Long userId, Timestamp time, Integer amount) {
         this.foodId = foodId
         this.userId = userId
         this.time = time
@@ -37,19 +37,19 @@ class Meal implements Serializable {
     @Column
     Long userId
 
-    @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    Timestamp time
-
-    @Override
-    public String toString() {
-        return "Meal{" +
-                "id=" + id +
-                ", foodId=" + foodId +
-                ", userId=" + userId +
-                ", timestamp=" + time +
-                '}';
+    Integer getAmount() {
+        return amount
     }
+
+    void setAmount(Integer amount) {
+        this.amount = amount
+    }
+    @Column
+    Integer amount
+
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    Timestamp time
 
 
     static long getSerialVersionUID() {
@@ -87,6 +87,17 @@ class Meal implements Serializable {
 
     void setTime(Timestamp time) {
         this.time = time
+    }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + id +
+                ", foodId=" + foodId +
+                ", userId=" + userId +
+                ", amount=" + amount +
+                ", time=" + time +
+                '}';
     }
 }
 

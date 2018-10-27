@@ -5,6 +5,7 @@ import com.wchah.feedle.domain.Meal
 import com.wchah.feedle.domain.Statistics
 import com.wchah.feedle.services.FoodService
 import com.wchah.feedle.services.MealService
+import com.wchah.feedle.services.StatisticsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,27 +26,35 @@ class DefaultRestController implements RestController {
     MealService mealService
     @Autowired
     FoodService foodService
+    @Autowired
+    StatisticsService statisticsService
 
     @Override
     @PostMapping(path = "/meal", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody Boolean putFood(@RequestBody Meal meal) {
+    @ResponseBody
+    Boolean putFood(@RequestBody Meal meal) {
         logger.info(meal.toString())
         mealService.putMealIntoDb(meal)
     }
 
     @GetMapping(path = "/stats/{userid}")
-    @ResponseBody List<Meal> getMeal(@RequestParam Long userId) {
+    @ResponseBody
+    List<Meal> getMeal(@RequestParam Long userId) {
         mealService.getAllMeals(userId)
     }
 
-    @Override
-    Statistics getFoodStats(String userId) {
-        return null
-    }
 
     @Override
     @GetMapping(path = "/foods")
-    @ResponseBody List<Food> getAllFoodNames() {
+    @ResponseBody
+    List<Food> getAllFoodNames() {
         foodService.allFoods
+    }
+
+    @Override
+    @GetMapping(path = "/stats/{userId}")
+    @ResponseBody
+    Statistics getStatistics(@RequestParam Long userId) {
+        statisticsService.getStatisticsForUser(userId)
     }
 }

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Controller
 @Controller
 interface RestController {
     Boolean putFood(Meal meal)
-    Statistics getFoodStats(String userId)
+    Statistics getStatistics(Long userId)
     List<String> getAllFoodNames()
 }
