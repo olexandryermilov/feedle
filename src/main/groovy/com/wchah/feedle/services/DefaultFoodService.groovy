@@ -1,5 +1,6 @@
 package com.wchah.feedle.services
 
+import com.wchah.feedle.domain.Food
 import com.wchah.feedle.repository.FoodRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,7 +14,7 @@ class DefaultFoodService implements FoodService {
     }
 
     @Override
-    List<String> getAllFoods() {
-        foodRepository.findAllFoodNames()
+    List<Food> getAllFoods() {
+        foodRepository.findAll()
     }
 }

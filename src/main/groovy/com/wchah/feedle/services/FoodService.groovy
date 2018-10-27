@@ -1,5 +1,7 @@
 package com.wchah.feedle.services
 
+import com.wchah.feedle.domain.Food
+
 interface FoodService {
-    List<String> getAllFoods()
+    List<Food> getAllFoods()
 }

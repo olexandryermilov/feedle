@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody
 @Controller
 class DefaultRestController implements RestController {
 
-
     Logger logger = LoggerFactory.getLogger(DefaultRestController.class);
     @Autowired
     MealService mealService
@@ -34,7 +33,7 @@ class DefaultRestController implements RestController {
         mealService.putMealIntoDb(meal)
     }
 
-    @GetMapping(path = "/{userid}")
+    @GetMapping(path = "/stats/{userid}")
     @ResponseBody List<Meal> getMeal(@RequestParam Long userId) {
         mealService.getAllMeals(userId)
     }
@@ -45,8 +44,8 @@ class DefaultRestController implements RestController {
     }
 
     @Override
-    @GetMapping(path = "/foodnames")
-    @ResponseBody List<String> getAllFoodNames() {
+    @GetMapping(path = "/foods")
+    @ResponseBody List<Food> getAllFoodNames() {
         foodService.allFoods
     }
 }

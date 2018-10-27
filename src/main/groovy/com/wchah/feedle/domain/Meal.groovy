@@ -17,7 +17,7 @@ import java.sql.Timestamp
 
 @Entity(name = "meals")
 class Meal implements Serializable {
-    private static final long serialVersionUID = -7788619177798333712L;
+    private static final long serialVersionUID = -7788619177798333712L
 
     Meal() {
     }
