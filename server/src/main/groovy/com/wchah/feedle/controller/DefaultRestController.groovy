@@ -14,10 +14,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
 @Controller
 class DefaultRestController implements RestController {
@@ -55,12 +57,12 @@ class DefaultRestController implements RestController {
     }
 
     @Override
-    @RequestMapping(value = "/stats/{userId}/{time}")
+    @RequestMapping(value = ["/stats/{userId}/{timeStr}", "/stats/{userId}"])
     @ResponseBody
-    Statistics getStatistics(@PathVariable long userId, @PathVariable(required = false) Long time) {
-        logger.info(time.toString())
-        if (time == null) statisticsService.getStatisticsForUser(userId)
-        else statisticsService.getStatisticsForUserSinceTimestamp(userId, new Timestamp(new Timestamp(new Date().getTime()).time - time))
+    Statistics getStatistics(@PathVariable long userId, @PathVariable(required = false) String timeStr) {
+        logger.info(timeStr.toString())
+        if (timeStr == null) statisticsService.getStatisticsForUser(userId)
+        else statisticsService.getStatisticsForUserSinceTimestamp(userId, timeStr)
     }
 
     @Override
@@ -71,11 +73,12 @@ class DefaultRestController implements RestController {
     }
 
     @Override
-    @PostMapping(value = "/users/{userId}")
-    def createUser(@PathVariable Long userId, @RequestBody(required = false) User user) {
+    @PostMapping(value = "/users")
+    @ResponseBody
+    def createUser(@RequestBody(required = true) User user) {
         logger.info(user.toString())
-        if (user == null) userService.createUser(userId)
-        else userService.updateUser(userId, user)
+        if (user == null) userService.createUser(user)
+        else userService.updateUser(user)
     }
 
     @Override
@@ -92,14 +95,14 @@ class DefaultRestController implements RestController {
         if (getUserType(userId) == 2)
             foodService.addFood(food)
         else
-            HttpStatus.FORBIDDEN
+            new ResponseEntity<>(HttpStatus.FORBIDDEN)
     }
 
     @Override
-    @GetMapping(value = "meals/{userId}/{time}")
+    @GetMapping(value = ["meals/{userId}/{time}","meals/{userId}"])
     @ResponseBody
-    def getAllMealsForUser(@PathVariable("userId") Long userId, @PathVariable(required = false) Long time) {
-        List<Meal> meals = mealService.getAllMealsByUserIdSince(userId, new Timestamp(new Timestamp(new Date().getTime()).time - time))
+    def getAllMealsForUser(@PathVariable("userId") Long userId, @PathVariable(required = false) String time) {
+        List<Meal> meals = mealService.getAllMealsByUserIdSince(userId, time)
         List<MealFood> mealFood = meals.stream().map{ meal -> new MealFood(meal, foodService.getFoodById(meal.foodId))}.collect { x -> x} as List<MealFood>
         mealFood
     }

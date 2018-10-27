@@ -1,6 +1,8 @@
 package com.wchah.feedle.domain
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers
@@ -19,22 +21,25 @@ import java.sql.Timestamp
 class Meal implements Serializable {
     private static final long serialVersionUID = -7788619177798333712L
 
+    //@JsonCreator
     Meal() {
     }
 
-    Meal(Long foodId, Long userId, Timestamp time, Integer amount) {
+    @JsonCreator
+    Meal(@JsonProperty("foodId") Long foodId, @JsonProperty("userId") Long userId, @JsonProperty("time") Timestamp time, @JsonProperty("amount") Integer amount) {
         this.foodId = foodId
         this.userId = userId
         this.time = time
+        this.amount = amount
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
-    @Column(name = "food_id")
+    @Column(name = "food")
     Long foodId
 
-    @Column(name = "user_id")
+    @Column(name = "user")
     Long userId
 
     Integer getAmount() {

@@ -22,11 +22,12 @@ class DefaultStatisticsService implements StatisticsService {
 
     @Override
     Statistics getStatisticsForUser(Long userId) {
-        getStatisticsForUserSinceTimestamp(userId, new Timestamp(0))
+        getStatisticsForUserSinceTimestamp(userId, "1970-01-01 00:00:01")
     }
 
     @Override
-    Statistics getStatisticsForUserSinceTimestamp(Long userId, Timestamp since) {
+    Statistics getStatisticsForUserSinceTimestamp(Long userId, String since) {
+        logger.info(since.toString())
         def water = mealsRepository.getWaterForUserSince(userId, since)
         def calories = mealsRepository.getCaloriesForUserSince(userId, since)
         new Statistics(water==null?0:water, calories==null?0:calories)

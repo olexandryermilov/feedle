@@ -3,9 +3,9 @@ package com.wchah.feedle.services
 import com.wchah.feedle.domain.User
 
 interface UserService {
-    def createUser(Long userId)
+    def createUser(User user)
 
-    def updateUser(Long userId, User user)
+    def updateUser(User user)
 
     Integer getUserType(Long userId)
 

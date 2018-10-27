@@ -9,11 +9,11 @@ import org.springframework.stereotype.Controller
 @Controller
 interface RestController {
     Boolean putFood(Meal meal)
-    Statistics getStatistics(long userId, Long time)
+    Statistics getStatistics(long userId, String timeStr)
     List<String> getAllFoodNames()
     Integer getUserType(Long userId)
-    def createUser(Long userId, User user)
+    def createUser(User user)
     def getUserInfo(Long userId)
     def createFood(Food food, Long userId)
-    def getAllMealsForUser(Long userId, Long time)
+    def getAllMealsForUser(Long userId, String time)
 }

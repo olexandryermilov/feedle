@@ -36,6 +36,8 @@ class User implements Serializable {
     boolean isWaterTracked
 
     User() {
+        this.isFoodTracked = true
+        this.isWaterTracked = true
     }
 
     User(Long id, String name, Integer type, Boolean subscribed, Integer height, Integer mass, Boolean isFoodTracked, Boolean isWaterTracked) {
