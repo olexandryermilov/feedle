@@ -18,13 +18,13 @@ interface MealsRepository extends JpaRepository<Meal, Long> {
     //public List<Person> find(@Param("lastName") String lastName);
 
     @Query(
-            value = "SELECT sum(food.calories_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>:time",
+            value = "SELECT sum(food.calories_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>=:time",
             nativeQuery = true
     )
     Integer getCaloriesForUserSince(@Param("userId") Long userId, @Param("time") Timestamp time)
 
     @Query(
-            value = "SELECT sum(food.water_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>:time",
+            value = "SELECT sum(food.water_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>=:time",
             nativeQuery = true
     )
     Integer getWaterForUserSince(@Param("userId") Long userId, @Param("time") Timestamp time)
