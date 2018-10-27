@@ -1,12 +1,16 @@
 package com.wchah.feedle.controller
 
+
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.wchah.feedle.controller.RestController
 import com.wchah.feedle.domain.Food
 import com.wchah.feedle.domain.Meal
 import com.wchah.feedle.domain.Statistics
+import com.wchah.feedle.domain.User
 import com.wchah.feedle.services.FoodService
 import com.wchah.feedle.services.MealService
 import com.wchah.feedle.services.StatisticsService
+import com.wchah.feedle.services.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +19,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 import java.sql.Timestamp
-import java.time.LocalDateTime
 
 @Controller
 class DefaultRestController implements RestController {
@@ -27,6 +30,8 @@ class DefaultRestController implements RestController {
     FoodService foodService
     @Autowired
     StatisticsService statisticsService
+    @Autowired
+    UserService userService
 
     @Override
     @PostMapping(path = "/meal", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -51,11 +56,32 @@ class DefaultRestController implements RestController {
     }
 
     @Override
-    @RequestMapping(value = "stats/{userId}/{time}")
+    @RequestMapping(value = "/stats/{userId}/{time}")
     @ResponseBody
     Statistics getStatistics(@PathVariable long userId, @PathVariable(required = false) Long time) {
         logger.info(time.toString())
-        if(time==null) statisticsService.getStatisticsForUser(userId)
-        else statisticsService.getStatisticsForUserSinceTimestamp(userId, new Timestamp(new Timestamp(new Date().getTime()).time-time))
+        if (time == null) statisticsService.getStatisticsForUser(userId)
+        else statisticsService.getStatisticsForUserSinceTimestamp(userId, new Timestamp(new Timestamp(new Date().getTime()).time - time))
     }
+
+    @Override
+    @GetMapping(value = "/users/{userId}")
+    @ResponseBody
+    Integer getUserType(@PathVariable Long userId) {
+        userService.getUserType(userId)
+    }
+
+    @Override
+    @PostMapping(value = "/users/{userId}")
+    def createUser(@PathVariable Long userId, @RequestBody(required = false) User user) {
+        logger.info(user.toString())
+        if (user == null) userService.createUser(userId)
+        else userService.updateUser(userId, user)
+    }
+
+    @Override
+    @GetMapping(value = "/user/{userId}")
+    @ResponseBody
+    User getUserInfo(@PathVariable Long userId) {
+        userService.getUser(userId)
 }
