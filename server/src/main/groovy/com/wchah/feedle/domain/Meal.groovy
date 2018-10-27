@@ -31,10 +31,10 @@ class Meal implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
 
-    @Column
+    @Column(name = "food_id")
     Long foodId
 
-    @Column
+    @Column(name = "user_id")
     Long userId
 
     Integer getAmount() {

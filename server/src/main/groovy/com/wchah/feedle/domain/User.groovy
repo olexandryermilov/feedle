@@ -1,7 +1,6 @@
 package com.wchah.feedle.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
 import javax.persistence.Column
 import javax.persistence.Entity

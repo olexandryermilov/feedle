@@ -1,9 +1,12 @@
 package com.wchah.feedle.services
 
 import com.wchah.feedle.domain.Meal
+import com.wchah.feedle.domain.MealFood
 import com.wchah.feedle.repository.MealsRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
+import java.sql.Timestamp
 
 @Service
 class DefaultMealService implements MealService{
@@ -26,7 +29,7 @@ class DefaultMealService implements MealService{
     }
 
     @Override
-    List<Meal> getAllMeals(Long userId) {
-        return mealRepository.findById()
+    List<Meal> getAllMealsByUserIdSince(Long userId, Timestamp time) {
+        mealRepository.findAllMealByUserIdSince(userId, time)
     }
 }
