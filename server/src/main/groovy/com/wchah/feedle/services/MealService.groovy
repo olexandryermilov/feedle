@@ -8,5 +8,5 @@ import java.sql.Timestamp
 interface MealService {
     Boolean putMealIntoDb(Meal meal)
 
-    List<Meal> getAllMealsByUserIdSince(Long userId, Timestamp time)
+    List<Meal> getAllMealsByUserIdSince(Long userId, String time)
 }

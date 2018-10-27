@@ -19,20 +19,20 @@ interface MealsRepository extends JpaRepository<Meal, Long> {
     //public List<Person> find(@Param("lastName") String lastName);
 
     @Query(
-            value = "SELECT sum(food.calories_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>=:time",
+            value = "SELECT sum(food.calories_per_g * meals.amount) FROM meals JOIN food on meals.food = food.id where meals.user = :userId and time>:time",
             nativeQuery = true
     )
-    Integer getCaloriesForUserSince(@Param("userId") Long userId, @Param("time") Timestamp time)
+    Integer getCaloriesForUserSince(@Param("userId") Long userId, @Param("time") String time)
 
     @Query(
-            value = "SELECT sum(food.water_per_g * meals.amount) FROM meals JOIN food on meals.food_id = food.id where meals.user_id = :userId and time>=:time",
+            value = "SELECT sum(food.water_per_g * meals.amount) FROM meals JOIN food on meals.food = food.id where meals.user = :userId and time>:time",
             nativeQuery = true
     )
-    Integer getWaterForUserSince(@Param("userId") Long userId, @Param("time") Timestamp time)
+    Integer getWaterForUserSince(@Param("userId") Long userId, @Param("time") String time)
 
     @Query(
-            value = "SELECT * FROM meals where meals.user_id = :userId and meals.time>=:time",
+            value = "SELECT * FROM meals where meals.user = :userId and meals.time>=:time",
             nativeQuery = true
     )
-    List<Meal> findAllMealByUserIdSince(@Param("userId") Long userId, @Param("time") Timestamp time)
+    List<Meal> findAllMealByUserIdSince(@Param("userId") Long userId, @Param("time") String time)
 }

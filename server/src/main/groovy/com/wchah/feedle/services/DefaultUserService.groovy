@@ -16,15 +16,12 @@ class DefaultUserService implements com.wchah.feedle.services.UserService {
     }
 
     @Override
-    def createUser(Long userId) {
-        User user = new User()
-        user.setId(userId)
+    def createUser(User user) {
         usersRepository.save(user)
     }
 
     @Override
-    def updateUser(Long userId, User user) {
-        user.setId(userId)
+    def updateUser(User user) {
         usersRepository.save(user)
     }
 

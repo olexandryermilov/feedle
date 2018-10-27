@@ -29,7 +29,7 @@ class DefaultMealService implements MealService{
     }
 
     @Override
-    List<Meal> getAllMealsByUserIdSince(Long userId, Timestamp time) {
+    List<Meal> getAllMealsByUserIdSince(Long userId, String time) {
         mealRepository.findAllMealByUserIdSince(userId, time)
     }
 }
